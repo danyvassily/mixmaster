@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 export default function HeroSection() {
   return (
@@ -46,9 +47,11 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <Button size="lg" className="w-full sm:w-auto">
-            Explorer les recettes
-          </Button>
+          <Link href="/routes/cocktails">
+            <Button size="lg" className="w-full sm:w-auto">
+              Explorer les recettes
+            </Button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

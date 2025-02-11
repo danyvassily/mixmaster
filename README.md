@@ -1,30 +1,37 @@
-# CocktailMaster
+# 🍸 MixMaster
 
-Une application moderne de gestion et de création de cocktails, développée avec Next.js, React et MongoDB.
+Application web moderne de gestion et découverte de cocktails, développée avec Next.js et TypeScript.
 
-## Fonctionnalités
+## 🌟 Fonctionnalités
 
-- 🍸 Consultation des cocktails classiques de l'IBA
-- 🔍 Recherche et filtrage des cocktails
-- ✨ Interface utilisateur moderne et responsive
-- ➕ Création de cocktails personnalisés
-- 💾 Sauvegarde dans une base de données MongoDB
+- 📱 Interface utilisateur moderne et responsive
+- 🔍 Recherche et filtrage avancés de cocktails
+- ✨ Animations fluides avec GSAP et Framer Motion
+- 📝 Création et gestion de cocktails personnalisés
+- 🎥 Intégration de vidéos YouTube pour les tutoriels
+- 🔐 Authentification utilisateur
+- 💾 Stockage des données avec MongoDB
 
-## Technologies Utilisées
+## 🛠 Technologies Utilisées
 
-- Next.js 14
-- React
-- TypeScript
-- MongoDB & Mongoose
-- Tailwind CSS
-- Axios & Cheerio (pour le scraping)
+- **Frontend:**
+  - Next.js 14
+  - TypeScript
+  - Tailwind CSS
+  - GSAP (GreenSock Animation Platform)
+  - Framer Motion
 
-## Installation
+- **Backend:**
+  - MongoDB
+  - Firebase Authentication
+  - API Routes Next.js
 
-1. Clonez le dépôt :
+## 🚀 Installation
+
+1. Clonez le repository :
 ```bash
-git clone [URL_DU_REPO]
-cd cocktail
+git clone git@github.com:danyvassily/mixmaster.git
+cd mixmaster
 ```
 
 2. Installez les dépendances :
@@ -32,44 +39,51 @@ cd cocktail
 npm install
 ```
 
-3. Configurez les variables d'environnement :
-Créez un fichier `.env.local` à la racine du projet avec :
-```
-MONGODB_URI=mongodb+srv://dany:azerty@cluster0.ujnql73.mongodb.net/cocktails
+3. Créez un fichier `.env.local` à la racine du projet avec les variables d'environnement nécessaires :
+```env
+MONGODB_URI=votre_uri_mongodb
+NEXT_PUBLIC_FIREBASE_API_KEY=votre_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=votre_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=votre_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=votre_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=votre_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=votre_app_id
 ```
 
-4. Importez les cocktails de l'IBA :
-```bash
-npx ts-node src/scripts/scrape-cocktails.ts
-```
-
-5. Lancez l'application :
+4. Lancez le serveur de développement :
 ```bash
 npm run dev
 ```
 
-L'application sera disponible sur `http://localhost:3000`
+L'application sera accessible à l'adresse [http://localhost:3000](http://localhost:3000).
 
-## Structure du Projet
+## 📖 Structure du Projet
 
 ```
 src/
-├── app/                    # Pages et routes Next.js
-│   ├── api/               # Routes API
-│   ├── routes/            # Routes de l'application
-│   └── page.tsx           # Page d'accueil
-├── components/            # Composants React
-│   ├── ui/               # Composants d'interface
-│   └── layout/           # Composants de mise en page
+├── app/                    # Routes et pages Next.js
+├── components/            # Composants React réutilisables
+├── context/              # Contextes React (Auth, etc.)
 ├── lib/                  # Utilitaires et configurations
-├── models/               # Modèles Mongoose
-└── scripts/             # Scripts utilitaires
+├── models/               # Modèles MongoDB
+└── types/               # Types TypeScript
 ```
 
-## Contribution
+## 🔧 Scripts Disponibles
+
+- `npm run dev` : Lance le serveur de développement
+- `npm run build` : Crée une version de production
+- `npm start` : Lance la version de production
+- `npm run lint` : Vérifie le code avec ESLint
+
+## 🤝 Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
 
-## Licence
+## 📝 Licence
 
-MIT
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 👤 Auteur
+
+- **Dany Vassily** - [GitHub](https://github.com/danyvassily)

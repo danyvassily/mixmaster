@@ -17,6 +17,7 @@ export default function Navbar() {
     { href: '/', label: 'Accueil' },
     { href: '/routes/cocktails', label: 'Cocktails' },
     { href: '/routes/bars', label: 'Bars' },
+    { href: '/routes/mixologie', label: 'Mixologie' },
     { href: '/routes/create', label: 'Créer' },
   ];
 

@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/utils/mongodb';
 import CocktailModel from '@/models/Cocktail';
 import { translate } from '@vitalets/google-translate-api';
-import { Types } from 'mongoose';
+import { CocktailSchema } from '@/lib/validations/cocktail';
+import { ZodError } from 'zod';
 
 async function translateText(text: string): Promise<string> {
   try {
@@ -44,21 +45,18 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    const cocktails = await CocktailModel.find(query)
-      .sort({ name: 1 })
-      .skip(skip)
-      .limit(limit)
-      .lean() as MongooseCocktail[];
-
-    const total = await CocktailModel.countDocuments(query);
+    const [cocktails, total] = await Promise.all([
+      CocktailModel.find(query)
+        .sort({ name: 1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      CocktailModel.countDocuments(query)
+    ]);
 
     const formattedCocktails = cocktails.map(cocktail => ({
-      _id: cocktail._id.toString(),
-      name: cocktail.name,
-      category: cocktail.category,
-      image: cocktail.image,
-      isAlcoholic: cocktail.isAlcoholic,
-      ingredients: cocktail.ingredients
+      ...cocktail,
+      _id: cocktail._id.toString()
     }));
 
     return NextResponse.json({
@@ -69,36 +67,146 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Erreur lors de la récupération des cocktails:', error);
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Erreur lors de la récupération des cocktails' },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    
+    // Validation avec Zod
+    const validatedData = CocktailSchema.parse(body);
+    
     await connectDB();
     
     // Traduction des champs si nécessaire
-    if (body.description) {
-      body.description = await translateText(body.description);
+    if (validatedData.description) {
+      validatedData.description = await translateText(validatedData.description);
     } else {
       // Création d'une description par défaut en français
-      const description = `${body.name} est un cocktail ${body.isAlcoholic ? 'alcoolisé' : 'sans alcool'} de la catégorie ${body.category}.${body.glassType ? ` Il est traditionnellement servi dans ${body.glassType}.` : ''}`;
-      body.description = description;
+      const description = `${validatedData.name} est un cocktail ${validatedData.isAlcoholic ? 'alcoolisé' : 'sans alcool'} de la catégorie ${validatedData.category}.${validatedData.glassType ? ` Il est traditionnellement servi dans ${validatedData.glassType}.` : ''}`;
+      validatedData.description = description;
     }
     
-    if (body.instructions) {
-      body.instructions = await translateText(body.instructions);
+    if (validatedData.instructions) {
+      validatedData.instructions = await translateText(validatedData.instructions);
     }
     
-    const cocktail = new CocktailModel(body);
+    const cocktail = new CocktailModel(validatedData);
     await cocktail.save();
     
     return NextResponse.json(cocktail, { status: 201 });
   } catch (error) {
     console.error('Erreur lors de la création du cocktail:', error);
+    
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Données invalides',
+          details: error.errors
+        },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Erreur lors de la création du cocktail' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, ...updateData } = body;
+    
+    if (!id) {
+      return NextResponse.json(
+        { error: 'ID du cocktail manquant' },
+        { status: 400 }
+      );
+    }
+    
+    // Validation partielle avec Zod
+    const validatedData = CocktailSchema.partial().parse(updateData);
+    
+    await connectDB();
+    
+    // Traduction si nécessaire
+    if (validatedData.description) {
+      validatedData.description = await translateText(validatedData.description);
+    }
+    
+    if (validatedData.instructions) {
+      validatedData.instructions = await translateText(validatedData.instructions);
+    }
+    
+    const updatedCocktail = await CocktailModel.findByIdAndUpdate(
+      id,
+      validatedData,
+      { new: true }
+    );
+    
+    if (!updatedCocktail) {
+      return NextResponse.json(
+        { error: 'Cocktail non trouvé' },
+        { status: 404 }
+      );
+    }
+    
+    return NextResponse.json(updatedCocktail);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour du cocktail:', error);
+    
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { 
+          error: 'Données invalides',
+          details: error.errors
+        },
+        { status: 400 }
+      );
+    }
+    
+    return NextResponse.json(
+      { error: 'Erreur lors de la mise à jour du cocktail' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+    
+    if (!id) {
+      return NextResponse.json(
+        { error: 'ID du cocktail manquant' },
+        { status: 400 }
+      );
+    }
+    
+    await connectDB();
+    
+    const deletedCocktail = await CocktailModel.findByIdAndDelete(id);
+    
+    if (!deletedCocktail) {
+      return NextResponse.json(
+        { error: 'Cocktail non trouvé' },
+        { status: 404 }
+      );
+    }
+    
+    return NextResponse.json({ message: 'Cocktail supprimé avec succès' });
+  } catch (error) {
+    console.error('Erreur lors de la suppression du cocktail:', error);
+    return NextResponse.json(
+      { error: 'Erreur lors de la suppression du cocktail' },
       { status: 500 }
     );
   }

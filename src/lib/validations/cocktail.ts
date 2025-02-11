@@ -1,5 +1,24 @@
 import { z } from 'zod';
 
+export const CocktailSchema = z.object({
+  name: z.string().min(1, "Le nom du cocktail est requis"),
+  category: z.string().min(1, "La catégorie est requise"),
+  isAlcoholic: z.boolean(),
+  image: z.string().optional(),
+  description: z.string().optional(),
+  instructions: z.string().optional(),
+  ingredients: z.array(
+    z.object({
+      name: z.string().min(1, "Le nom de l'ingrédient est requis"),
+      quantity: z.string().optional(),
+      unit: z.string().optional(),
+    })
+  ).min(1, "Au moins un ingrédient est requis"),
+  glassType: z.string().optional(),
+});
+
+export type CocktailType = z.infer<typeof CocktailSchema>;
+
 export const ingredientSchema = z.object({
   name: z.string().min(2, 'Le nom de l\'ingrédient doit contenir au moins 2 caractères'),
   quantity: z.string().min(1, 'La quantité est requise'),
