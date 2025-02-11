@@ -6,7 +6,7 @@ interface ErrorMessageProps {
   onRetry?: () => void;
 }
 
-export const ErrorMessage = ({ message, className = '', onRetry }: ErrorMessageProps) => {
+const ErrorMessage = ({ message, className = '', onRetry }: ErrorMessageProps) => {
   return (
     <div className={`bg-red-500/10 border border-red-500/20 rounded-lg p-4 ${className}`}>
       <div className="flex items-start space-x-3">
@@ -25,4 +25,7 @@ export const ErrorMessage = ({ message, className = '', onRetry }: ErrorMessageP
       </div>
     </div>
   );
-}; 
+};
+
+export { ErrorMessage };
+export type { ErrorMessageProps }; 

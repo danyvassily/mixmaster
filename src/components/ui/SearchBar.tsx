@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { debounce } from 'lodash';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatApiError } from '@/lib/services/errorService';
-import ErrorMessage from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 interface Suggestion {
   _id: string;
