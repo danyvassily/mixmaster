@@ -9,6 +9,7 @@ import SearchBar from '@/components/mixologie/SearchBar';
 import CocktailList from '@/components/mixologie/CocktailList';
 import VerrerieSection from '@/components/mixologie/VerrerieSection';
 import OutilsSection from '@/components/mixologie/OutilsSection';
+import ArticleMixologie from '@/components/mixologie/ArticleMixologie';
 
 // Types pour nos sections
 type Section = {
@@ -34,7 +35,7 @@ const MixologiePage = () => {
     setSearchTerm(term.toLowerCase());
     // Trouver la section la plus pertinente basée sur le terme de recherche
     const sectionKeywords: { [key: string]: string[] } = {
-      histoire: ['histoire', 'origines', 'évolution', 'kir', 'hemingway', 'negroni'],
+      histoire: ['histoire', 'origines', 'évolution', 'kir', 'hemingway', 'negroni', 'mixologie', 'art', 'exploration', 'immersive'],
       regles: ['règles', 'base', 'classiques', 'ingrédients', 'dosage'],
       categories: ['catégories', 'short drinks', 'long drinks', 'sparklings', 'shooters'],
       verres: ['verres', 'cocktail', 'tumbler', 'flûte', 'champagne'],
@@ -54,23 +55,7 @@ const MixologiePage = () => {
     {
       id: 'histoire',
       title: 'Histoire de la Mixologie',
-      content: (
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold mb-4 text-white">Origines et Évolution</h3>
-          <p className="text-gray-300">
-            L&apos;art de la mixologie est intrinsèquement lié à la célébration et au plaisir. 
-            Les cocktails, qu&apos;ils soient alcoolisés ou non, sont souvent au cœur des festivités.
-          </p>
-          <div className="bg-gray-800/50 p-4 rounded-lg mt-4 border border-gray-700">
-            <h4 className="font-semibold mb-2 text-white">Personnalités Marquantes</h4>
-            <ul className="list-disc pl-5 space-y-2 text-gray-300">
-              <li><span className="font-medium text-blue-400">Félix Kir</span> - Chanoine et maire de Dijon, créateur du fameux Kir</li>
-              <li><span className="font-medium text-blue-400">Ernest Hemingway</span> - Inspiration du "Papa Doble" à La Havane</li>
-              <li><span className="font-medium text-blue-400">Comte Camillo Negroni</span> - Créateur du cocktail Negroni en 1919</li>
-            </ul>
-          </div>
-        </div>
-      )
+      content: <ArticleMixologie />
     },
     {
       id: 'regles',

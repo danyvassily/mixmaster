@@ -5,7 +5,6 @@ export interface Bar {
   description: string;
   rating: number;
   specialties: string[];
-  imageUrl: string;
   coordinates?: {
     lat: number;
     lng: number;
@@ -29,7 +28,6 @@ export const defaultBar: Bar = {
   description: '',
   rating: 0,
   specialties: [],
-  imageUrl: '/images/default-bar.jpg',
   coordinates: undefined,
   openingHours: undefined,
   contact: undefined,

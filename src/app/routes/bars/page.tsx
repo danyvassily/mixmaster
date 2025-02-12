@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { Bar } from '@/models/Bar';
 import BarFilters, { BarFilters as IBarFilters } from '@/components/ui/BarFilters';
 
@@ -14,7 +13,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar aux influences nippones proposant des cocktails millimétrés, une ambiance funk des années 80 et de délicieuses petites assiettes.',
     rating: 5.0,
     specialties: ['Cocktails Signature', 'Cuisine Japonaise', 'Vinyles'],
-    imageUrl: '/images/bars/frequence.jpg',
     priceRange: '€€'
   },
   {
@@ -24,7 +22,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar velours et marbre caché au fond du restaurant Daroco, proposant des cocktails érudits avec des techniques innovantes comme la clarification et la distillation.',
     rating: 5.0,
     specialties: ['Cocktails Créatifs', 'Mixologie Moléculaire'],
-    imageUrl: '/images/bars/danico.jpg',
     priceRange: '€€€'
   },
   {
@@ -34,7 +31,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Un pub anglais revisité avec une approche éco-responsable des cocktails, utilisant des ingrédients de saison et locaux.',
     rating: 5.0,
     specialties: ['Cocktails Durables', 'Pub', 'Produits Locaux'],
-    imageUrl: '/images/bars/cambridge.jpg',
     priceRange: '€'
   },
   {
@@ -44,7 +40,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar élégant aux influences maghrébines et orientales, avec une piste de danse disco et une ambiance qui se délure en soirée.',
     rating: 4.0,
     specialties: ['Cocktails Orientaux', 'Danse', 'Ambiance Festive'],
-    imageUrl: '/images/bars/andy-wahloo.jpg',
     priceRange: '€€€'
   },
   {
@@ -54,7 +49,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar moderniste années 50 avec pierres de lave et aquarium iconique, proposant des cocktails inventifs dans une ambiance rétro.',
     rating: 4.0,
     specialties: ['Cocktails Classiques', 'Ambiance Rétro'],
-    imageUrl: '/images/bars/bluebird.jpg',
     priceRange: '€€'
   },
   {
@@ -64,7 +58,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar à cocktails de quartier élégant avec une déco bois et métal, proposant des créations originales à prix raisonnables.',
     rating: 5.0,
     specialties: ['Cocktails Signature', 'Bar de Quartier'],
-    imageUrl: '/images/bars/monsieur-antoine.jpg',
     priceRange: '€€'
   },
   {
@@ -74,7 +67,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Diner moderniste avec boule à facettes et ambiance hip-hop, servant des cocktails voyageurs et une cuisine réconfortante.',
     rating: 4.0,
     specialties: ['Cocktails Créatifs', 'Street Food', 'Ambiance Hip-Hop'],
-    imageUrl: '/images/bars/divine.jpg',
     priceRange: '€€'
   },
   {
@@ -84,7 +76,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Un des bars les plus réputés de Paris, reconnu internationalement pour ses cocktails créatifs et son ambiance intimiste.',
     rating: 4.9,
     specialties: ['Cocktails Signature', 'Bar Caché'],
-    imageUrl: '/images/bars/little-red-door.jpg',
     priceRange: '€€€'
   },
   {
@@ -94,7 +85,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar spécialisé dans les spiritueux français avec une ambiance underground unique.',
     rating: 4.8,
     specialties: ['Spiritueux Français', 'Cocktails Créatifs'],
-    imageUrl: '/images/bars/le-syndicat.jpg',
     priceRange: '€€'
   },
   {
@@ -104,7 +94,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Speakeasy caché derrière une taqueria, proposant des cocktails inspirés de la mixologie mexicaine.',
     rating: 4.7,
     specialties: ['Cocktails Mexicains', 'Tacos', 'Bar Caché'],
-    imageUrl: '/images/bars/candelaria.jpg',
     priceRange: '€€'
   },
   {
@@ -114,7 +103,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar à cocktails moderne et chaleureux proposant des créations originales à base de produits de saison.',
     rating: 4.6,
     specialties: ['Cocktails de Saison', 'Bar de Quartier'],
-    imageUrl: '/images/bars/combat.jpg',
     priceRange: '€€'
   },
   {
@@ -124,7 +112,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar à cocktails et à whiskies dans une ancienne boucherie, ambiance tamisée et canapés confortables.',
     rating: 4.7,
     specialties: ['Whiskies', 'Cocktails Signature'],
-    imageUrl: '/images/bars/sherry-butt.jpg',
     priceRange: '€€€'
   },
   {
@@ -134,7 +121,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar sans carte où les cocktails sont créés sur mesure selon vos goûts et envies.',
     rating: 4.8,
     specialties: ['Cocktails Sur Mesure', 'Bar Créatif'],
-    imageUrl: '/images/bars/bisou.jpg',
     priceRange: '€€'
   },
   {
@@ -144,7 +130,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar colonial dans un lieu atypique, proposant des cocktails exotiques et une ambiance unique.',
     rating: 4.5,
     specialties: ['Cocktails Exotiques', 'Décor Unique'],
-    imageUrl: '/images/bars/comptoir-general.jpg',
     priceRange: '€€'
   },
   {
@@ -154,7 +139,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar à absinthe inspiré des années folles, avec musique live et cocktails d\'époque.',
     rating: 4.6,
     specialties: ['Absinthe', 'Jazz Live'],
-    imageUrl: '/images/bars/lulu-white.jpg',
     priceRange: '€€'
   },
   {
@@ -164,7 +148,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar spécialisé en mezcal et tequila, caché derrière le restaurant Café Chilango.',
     rating: 4.7,
     specialties: ['Mezcal', 'Tequila', 'Bar Caché'],
-    imageUrl: '/images/bars/mezcaleria.jpg',
     priceRange: '€€'
   },
   {
@@ -174,7 +157,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Rooftop bar avec vue panoramique sur Paris, cocktails raffinés et ambiance décontractée.',
     rating: 4.5,
     specialties: ['Vue Panoramique', 'Cocktails Signature'],
-    imageUrl: '/images/bars/perchoir-marais.jpg',
     priceRange: '€€€'
   },
   {
@@ -184,7 +166,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar festif proposant une ambiance décontractée avec karaoké et événements culturels. Cocktails abordables (max 13€) et petites assiettes à partager dans un cadre mi-cosy mi-industriel.',
     rating: 4.5,
     specialties: ['Karaoké', 'Cocktails Abordables', 'Ambiance Festive'],
-    imageUrl: '/images/bars/drama.jpg',
     priceRange: '€'
   },
   {
@@ -194,7 +175,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Premier bar à gin de Paris avec plus de 130 références, dirigé par Lorenzo Dos Santos. Un refuge urbain décoré avec goût proposant des Gin&Tonic d\'exception et des cocktails signature originaux.',
     rating: 4.8,
     specialties: ['Gin', 'Cocktails Signature', 'Bar Spécialisé'],
-    imageUrl: '/images/bars/tiger.jpg',
     priceRange: '€€€'
   },
   {
@@ -204,7 +184,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar à cocktails aux airs de speakeasy, nommé d\'après un cocktail mythique de la Nouvelle-Orléans. Ambiance feutrée et cocktails créatifs comme le Douce Flamme au gin et à la framboise.',
     rating: 4.7,
     specialties: ['Cocktails Créatifs', 'Ambiance Speakeasy', 'Tapas'],
-    imageUrl: '/images/bars/vieux-carre.jpg',
     priceRange: '€€'
   },
   {
@@ -214,7 +193,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar caché à l\'étage d\'une laverie, concept unique avec des balançoires en bois et une ambiance colorée. Cocktails créatifs dans un cadre original.',
     rating: 4.6,
     specialties: ['Bar Caché', 'Décor Original', 'Cocktails Créatifs'],
-    imageUrl: '/images/bars/lavomatic.jpg',
     priceRange: '€€'
   },
   {
@@ -224,7 +202,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar tiki proposant une large sélection de rhums dans une ambiance hawaïenne kitsch. Parfait pour s\'évader le temps d\'une soirée.',
     rating: 4.5,
     specialties: ['Rhums', 'Cocktails Tiki', 'Ambiance Hawaïenne'],
-    imageUrl: '/images/bars/dirty-dick.jpg',
     priceRange: '€€'
   },
   {
@@ -234,7 +211,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Bar secret caché derrière une pizzeria, dans un style prohibition avec une impressionnante carte de whiskies et des cocktails d\'époque.',
     rating: 4.8,
     specialties: ['Whiskies', 'Bar Caché', 'Ambiance Prohibition'],
-    imageUrl: '/images/bars/moonshiner.jpg',
     priceRange: '€€'
   },
   {
@@ -244,7 +220,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Haut lieu du cocktail où officient des bartenders de renommée mondiale comme Jennifer le Nechet. Cocktails inventifs accompagnés de délicieuses boulettes.',
     rating: 4.9,
     specialties: ['Cocktails Signature', 'Cuisine', 'Bartenders Étoilés'],
-    imageUrl: '/images/bars/cafe-moderne.jpg',
     priceRange: '€€€'
   },
   {
@@ -254,7 +229,6 @@ const MOCK_BARS: Bar[] = [
     description: 'Grand espace de 200m² chaleureux avec bar central proposant des cocktails originaux et une cuisine méditerranéenne raffinée. Ambiance conviviale et équipe sympathique.',
     rating: 4.7,
     specialties: ['Cocktails Créatifs', 'Cuisine Méditerranéenne', 'Grande Capacité'],
-    imageUrl: '/images/bars/bonhomie.jpg',
     priceRange: '€€'
   }
 ];
@@ -341,13 +315,7 @@ export default function BarsPage() {
             className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
           >
             <div className="relative h-48">
-              <Image
-                src={bar.imageUrl}
-                alt={`Photo du bar ${bar.name}`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+              {/* Image placeholder */}
             </div>
 
             <div className="p-6">
